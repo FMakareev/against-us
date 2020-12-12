@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package commons;
+
+message FilterById {
+  string id = 1;
+}
+message Empty {}
+
+message MongooseDeleteResult {
+  int32 n = 1;
+  int32 ok = 2;
+  int32 deletedCount = 3;
+}

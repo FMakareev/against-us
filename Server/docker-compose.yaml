@@ -1,0 +1,24 @@
+version: '3.6'
+services:
+
+  p2p-battle-svc:
+    container_name: p2p-battle-svc-dev
+    image: p2p-battle-svc-dev
+    restart: unless-stopped
+    expose:
+      - 2567
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    networks:
+      - er-network-dev
+    volumes:
+      - ./:/home/microservices/app
+    env_file: .env.development
+    command: npm run start:dev
+    ports:
+      - '2567:2567'
+
+networks:
+  er-network-dev:
+    external: true

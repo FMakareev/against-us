@@ -1,0 +1,53 @@
+{
+  "name": "p2p-battle-svc",
+  "version": "0.0.0",
+  "scripts": {
+    "start:prod": "cross-env NODE_ENV=production node build/index.js",
+    "start:dev": "cross-env NODE_ENV=development nodemon --watch src --delay 1 --exec 'ts-node' src/index.ts",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "build": "npm run copy:proto && npm run build:server && npm run build:front",
+    "build:server": "rimraf ./build && tsc",
+    "build:front": "cd ./frontend && npm run build",
+    "copy:proto": "rimraf ./src/_proto_ && cp -r ../../_proto_ ./src/_proto_",
+    "docker:build:dev": "npm run copy:proto && docker-compose build",
+    "start:docker": "npm run copy:proto && docker-compose up",
+    "build-schema": "npx schema-codegen src/p2p-battle/schema/p2p-battle-state.schema.ts --output codgen-schema/p2p-battle-schema/ --csharp --namespace P2PBattleStateSchemaNS"
+  },
+  "dependencies": {
+    "@colyseus/monitor": "0.12.2",
+    "@colyseus/schema": "^1.0.1",
+    "@colyseus/social": "^0.11.6",
+    "@nestjs/common": "^7.4.4",
+    "@nestjs/core": "^7.4.4",
+    "@nestjs/microservices": "^7.4.4",
+    "@types/lodash": "^4.14.162",
+    "@types/serve-index": "^1.7.30",
+    "colyseus": "^0.14.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "lodash": "^4.17.20",
+    "rxjs": "^6.6.3",
+    "serve-index": "^1.9.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "devDependencies": {
+    "@colyseus/loadtest": "^0.14.0",
+    "@types/cors": "^2.8.8",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.8",
+    "@types/node": "^14.14.2",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.8.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-functional": "^3.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.6",
+    "typescript": "^4.0.2"
+  }
+}

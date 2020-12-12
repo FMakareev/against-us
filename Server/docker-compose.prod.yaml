@@ -1,0 +1,22 @@
+version: '3.6'
+services:
+  p2p-battle-svc:
+    container_name: p2p-battle-svc
+    image: p2p-battle-svc
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    env_file: .env.production
+    environment:
+      - NODE_ENV=production
+    expose:
+      - 2567
+    ports:
+      - '2567:2567'
+    networks:
+      - er-network
+
+networks:
+  er-network:
+    external: true

@@ -1,0 +1,38 @@
+syntax = "proto3";
+import "commons.proto";
+
+package news;
+
+message News {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string buttonText = 4;
+  string buttonUrl = 5;
+  string smallPreview = 6;
+  string largePreview = 7;
+  string publicationStartDate = 8;
+  string publicationEndDate = 9;
+  string shortDesc = 10;
+  bool isActive = 11;
+}
+
+message NewsList {
+  repeated News data = 1;
+}
+
+message NewsFilter {
+ string fromPublishDate = 1;
+}
+
+service NewsService {
+
+    rpc GetNewsById(commons.FilterById) returns (News) {}
+    rpc GetNewsForClient(NewsFilter) returns (NewsList) {}
+    rpc GetNewsForAdmin(commons.Empty) returns (NewsList) {}
+
+    rpc CreateNews(News) returns (News) {}
+    rpc UpdateNews(News) returns (News) {}
+    rpc DeleteNews(commons.FilterById) returns (commons.MongooseDeleteResult) {}
+
+}

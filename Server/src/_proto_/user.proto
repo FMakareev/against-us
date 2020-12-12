@@ -1,0 +1,67 @@
+syntax = "proto3";
+import "commons.proto";
+
+package user;
+
+enum UserRole {
+  GUEST = 0;
+  PLAYER = 1;
+  ADMIN = 2;
+}
+
+// базовая модель пользователя
+message User {
+  string id = 1;
+  string userName = 2;
+  string email = 3;
+  UserRole role = 4;
+  string password = 5;
+  string createAt = 10;
+  string updateAt = 11;
+}
+
+message UserList {
+  repeated User data = 1;
+}
+
+message CreateUserDto {
+  string password = 1;
+  string email = 2;
+}
+
+message CreateGuestDto {
+}
+
+message UserUpdateDto {
+  string id = 1;
+  string userName = 2;
+  string email = 3;
+  UserRole role = 4;
+}
+
+message UserPasswordDto {
+  string email = 1;
+  string id = 2;
+  string oldPassword = 3;
+  string newPassword = 4;
+}
+
+message FilterByEmail {
+  string email = 1;
+}
+
+service UserService {
+
+  rpc getUserById(commons.FilterById) returns (User) {}
+  rpc getUserByEmail(FilterByEmail) returns (User) {}
+  rpc getUserList(commons.Empty) returns (UserList){}
+
+  rpc createUser(CreateUserDto) returns (User){}
+  rpc createGuestUser(CreateGuestDto) returns (User){}
+
+  rpc changePassword(UserPasswordDto)  returns (User){}
+  rpc updateUser(UserUpdateDto) returns (User){}
+
+  rpc deleteUser(commons.FilterById) returns (commons.MongooseDeleteResult){}
+
+}

@@ -1,0 +1,14 @@
+FROM node:12.18.4
+
+RUN mkdir -p /home/microservices/app/node_modules \
+    && chown -R node:node /home/microservices/app
+
+WORKDIR /home/microservices/app
+
+COPY package*.json ./
+
+USER node
+
+COPY --chown=node:node . .
+
+CMD ['node', '-e', 'setInterval(()=>{}, 60000); process.on("SIGTERM", () => {process.exit(0);})']
